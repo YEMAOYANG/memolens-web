@@ -1,115 +1,105 @@
 {
   "nav": {
-    "home": "首页",
-    "features": "功能",
-    "advantages": "优势",
-    "price": "定价",
-    "download": "下载"
+    "home":       "首页",
+    "features":   "功能",
+    "howItWorks": "使用流程",
+    "price":      "定价",
+    "download":   "下载",
+    "getApp":     "免费下载"
   },
   "hero": {
-    "badge": "全新发布 · AI 驱动记忆工具",
-    "title": "拍一下，\n记住一切",
-    "description": "用手机摄像头扫描名片、白板、菜单、合同…AI 自动理解归档，用自然语言随时找回。"
+    "badge":       "全新发布 · AI 驱动记忆工具",
+    "title":       "拍一下，记住一切",
+    "titleAccent": "拍一下，",
+    "titleNormal": "记住一切",
+    "description": "用手机摄像头扫描名片、白板、菜单、合同…AI 自动理解归档，用自然语言随时找回。",
+    "ctaIos":      "App Store 下载",
+    "ctaAndroid":  "Google Play",
+    "ctaDemo":     "观看演示",
+    "guarantee":   "免费下载 · 200 张/月 · 无需信用卡"
   },
-  "stats": {
-    "quota": "200张",
-    "quotaLabel": "免费额度/月",
-    "accuracy": "96%+",
-    "accuracyLabel": "AI 识别准确率",
-    "speed": "<3s",
-    "speedLabel": "归档响应速度",
-    "lang": "中英日",
-    "langLabel": "多语言支持"
-  },
-  "download": {
-    "ios": "App Store 下载",
-    "android": "Google Play",
-    "guarantee": "免费下载，200 张/月额度，无需信用卡",
-    "title": "开始你的第二大脑",
-    "description": "免费下载，200 张/月额度，无需信用卡"
-  },
+  "stats": [
+    { "num": "200张", "label": "免费额度/月" },
+    { "num": "96%+",  "label": "AI 识别准确率" },
+    { "num": "<3s",   "label": "归档响应速度" },
+    { "num": "中英日", "label": "多语言支持" }
+  ],
   "features": {
-    "title": "相机 × AI = 完美记忆",
-    "subtitle": "五大核心功能，打通「拍照→理解→检索」完整闭环",
+    "eyebrow": "核心能力",
+    "title":   "相机 × AI = 完美记忆",
+    "subtitle":"五大核心功能，打通「拍照→理解→检索」完整闭环",
     "items": [
-      {
-        "title": "扫一扫存入脑",
-        "description": "拍照即触发 OCR + 多模态 AI 理解，自动打标签归档。支持名片、白板、文件、菜单、票据。",
-        "advantage": "亮点：本地 OCR 处理，隐私更安全"
-      },
-      {
-        "title": "自然语言检索",
-        "description": "直接问「上周那张白板写了什么？」AI 秒级回答，附带原图来源，告别翻找相册。",
-        "advantage": "亮点：RAG 向量检索，结果更精准"
-      },
-      {
-        "title": "跨语言理解",
-        "description": "英文菜单、日文标识、中文合同，自动互译存储，海内外场景全通吃。",
-        "advantage": "亮点：支持中英日韩等 10 种语言"
-      }
+      { "icon": "gn01.png", "title": "扫一扫存入脑",   "desc": "拍照即触发 OCR + 多模态 AI 理解，自动打标签归档。支持名片、白板、文件、菜单、票据。" },
+      { "icon": "gn02.png", "title": "自然语言检索",   "desc": "直接问「上周那张白板写了什么？」AI 秒级回答，附带原图来源，告别翻找相册。" },
+      { "icon": "gn03.png", "title": "跨语言理解",     "desc": "英文菜单、日文标识、中文合同，自动互译存储，海内外场景全通吃。" },
+      { "icon": "gn01.png", "title": "知识关联图谱",   "desc": "AI 自动发现你记录之间的隐藏联系，将零散信息织成知识网络。" },
+      { "icon": "gn02.png", "title": "一键导出分享",   "desc": "转为飞书文档、Notion 页面、PDF，或直接分享给同事。知识不再孤立。" },
+      { "icon": "gn03.png", "title": "隐私优先设计",   "desc": "本地 OCR 处理，可选端侧存储，数据主权完全在你手中。国内/海外双架构合规。", "dark": true }
     ]
   },
-  "advantages": {
-    "title": "为什么选择 MemoLens",
-    "description": "隐私、速度、智能——三者兼得",
-    "items": [
-      {
-        "label": "本地优先处理",
-        "description": "OCR 文字识别在你的设备本地完成，敏感内容不离开手机。"
-      },
-      {
-        "label": "3 秒极速归档",
-        "description": "拍照到完成 AI 分析平均仅需 3 秒，效率提升 10 倍。"
-      },
-      {
-        "label": "知识关联图谱",
-        "description": "AI 自动发现记录之间的隐藏联系，将零散信息织成知识网络。"
-      },
-      {
-        "label": "跨平台导出",
-        "description": "一键导出到飞书文档、Notion 页面、PDF，知识随处可用。"
-      }
+  "how": {
+    "eyebrow": "使用流程",
+    "title":   "三步，永久记住",
+    "subtitle": "从拍照到找回，最快 3 秒完成归档",
+    "steps": [
+      { "num": "01", "title": "拍照扫描",   "desc": "打开相机，对准任何内容拍照。AI 实时识别文字，3 秒完成归档。" },
+      { "num": "02", "title": "AI 智能归档", "desc": "自动识别内容类型、生成摘要、打标签，结构化信息一键提取。" },
+      { "num": "03", "title": "随时找回",   "desc": "用自然语言提问，AI 秒级回答，附带原图来源，永不遗忘。" }
     ]
   },
   "pricing": {
-    "title": "简单透明的定价",
-    "description": "免费开始，随时升级",
+    "eyebrow": "定价",
+    "title":   "简单透明的定价",
+    "subtitle": "免费开始，随时升级",
     "popular": "最受欢迎",
-    "planFree": "免费版",
-    "planPro": "Pro 版",
-    "priceFree": "¥0",
-    "pricePro": "¥28",
-    "perMonth": "/月",
-    "proFirst": "首月仅 ¥9.9",
-    "freeFeatures": ["200 张/月归档额度", "基础 AI 问答", "中英文识别", "30 天历史记录"],
-    "proFeatures": ["无限归档额度", "高级 AI 问答（GPT-4o）", "中英日韩等 10 语言", "无限历史记录", "知识关联图谱", "导出飞书/Notion/PDF"],
-    "ctaFree": "免费下载",
-    "ctaPro": "立即升级 →"
+    "free": {
+      "name":     "免费版",
+      "price":    "¥0",
+      "period":   "/月",
+      "features": ["200 张/月归档额度", "基础 AI 问答", "中英文识别", "30 天历史记录"],
+      "excluded": ["高级 AI 分析", "无限存储"],
+      "cta":      "免费下载"
+    },
+    "pro": {
+      "name":     "Pro 版",
+      "price":    "¥28",
+      "period":   "/月",
+      "hint":     "首月仅 ¥9.9",
+      "features": ["无限归档额度", "高级 AI 问答（GPT-4o）", "中英日韩等 10 语言", "无限历史记录", "知识关联图谱", "导出飞书/Notion/PDF"],
+      "cta":      "立即升级 →"
+    },
+    "enterprise": "企业版（团队共享知识库）¥99/人/月 · 联系我们"
+  },
+  "testimonials": {
+    "eyebrow": "用户反馈",
+    "title":   "他们都在用",
+    "items": [
+      { "stars": 5, "text": "「出差拍了 30 张名片，回来问 AI「阿里云那个人叫什么」，秒出答案。以前整理要 1 小时，现在 0 秒。」", "name": "张伟", "role": "咨询顾问 · 北京", "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" },
+      { "stars": 5, "text": "「在日本旅行，扫菜单直接翻译存档，回国还能问 AI「那家店招牌菜多少钱」，太好用了！」", "name": "李晓萌", "role": "自由旅行者", "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" },
+      { "stars": 5, "text": "「研究生必备！论文截图全存进去，写论文时直接问 AI「这个观点的出处」，效率翻倍。」", "name": "陈博文", "role": "博士研究生 · 上海", "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" }
+    ]
+  },
+  "cta": {
+    "title":    "开始你的第二大脑",
+    "subtitle": "免费下载，200 张/月额度，无需信用卡",
+    "ios":      "App Store",
+    "android":  "Google Play"
   },
   "footer": {
     "tagline": "AI 驱动的相机记忆工具\n让你永不遗忘重要内容",
     "product": "产品",
-    "legal": "法律",
-    "allRightsReserved": "版权所有",
-    "privacyPolicy": "隐私政策",
-    "termsOfService": "使用条款"
+    "legal":   "法律",
+    "contact": "联系",
+    "privacy": "隐私政策",
+    "terms":   "使用条款",
+    "blog":    "博客",
+    "rights":  "版权所有"
   },
   "seo": {
-    "title": "MemoLens - 拍一下，记住一切",
-    "ogTitle": "MemoLens - AI 驱动的第二大脑",
+    "title":       "MemoLens - 拍一下，记住一切",
     "description": "用手机摄像头扫描名片、白板、文件，AI 自动归档，随时自然语言找回。",
-    "keywords": "MemoLens, AI 笔记, 相机归档, 第二大脑, OCR, 智能记忆, 名片识别"
+    "keywords":    "MemoLens, AI 笔记, 相机归档, 第二大脑, OCR, 智能记忆"
   },
-  "privacy": {
-    "title": "隐私政策",
-    "updated": "最后更新：2026年3月4日",
-    "highlight": "我们高度重视你的隐私。MemoLens 采用「本地优先」设计，照片 OCR 在设备本地处理，最大限度保护你的个人数据。"
-  },
-  "terms": {
-    "title": "使用条款"
-  },
-  "common": {
-    "heroAlt": "MemoLens - AI 相机记忆工具",
-    "whyAlt": "为什么选择 MemoLens"
-  }
+  "privacy": { "title": "隐私政策", "updated": "最后更新：2026年3月4日", "highlight": "我们高度重视你的隐私。MemoLens 采用「本地优先」设计，照片 OCR 在设备本地处理，最大限度保护你的个人数据。" },
+  "terms":   { "title": "使用条款" }
 }

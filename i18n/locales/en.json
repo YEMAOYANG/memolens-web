@@ -1,115 +1,105 @@
 {
   "nav": {
-    "home": "Home",
-    "features": "Features",
-    "advantages": "Why Us",
-    "price": "Pricing",
-    "download": "Download"
+    "home":       "Home",
+    "features":   "Features",
+    "howItWorks": "How It Works",
+    "price":      "Pricing",
+    "download":   "Download",
+    "getApp":     "Get App Free"
   },
   "hero": {
-    "badge": "New · AI-Powered Memory Tool",
-    "title": "Snap It,\nNever Forget It",
-    "description": "Scan business cards, whiteboards, menus, contracts with your camera. AI archives and organizes everything. Find anything with natural language."
+    "badge":       "New · AI-Powered Memory Tool",
+    "title":       "Snap It, Never Forget It",
+    "titleAccent": "Snap It, ",
+    "titleNormal": "Never Forget It",
+    "description": "Scan business cards, whiteboards, menus, contracts with your camera. AI archives everything. Find anything with natural language.",
+    "ctaIos":      "App Store",
+    "ctaAndroid":  "Google Play",
+    "ctaDemo":     "Watch Demo",
+    "guarantee":   "Free download · 200 scans/month · No credit card"
   },
-  "stats": {
-    "quota": "200",
-    "quotaLabel": "Free scans/month",
-    "accuracy": "96%+",
-    "accuracyLabel": "AI accuracy",
-    "speed": "<3s",
-    "speedLabel": "Archive speed",
-    "lang": "10+",
-    "langLabel": "Languages"
-  },
-  "download": {
-    "ios": "App Store",
-    "android": "Google Play",
-    "guarantee": "Free to download · 200 scans/month · No credit card",
-    "title": "Start Your Second Brain",
-    "description": "Free to download · 200 scans/month · No credit card required"
-  },
+  "stats": [
+    { "num": "200",   "label": "Free scans/month" },
+    { "num": "96%+",  "label": "AI accuracy" },
+    { "num": "<3s",   "label": "Archive speed" },
+    { "num": "10+",   "label": "Languages" }
+  ],
   "features": {
-    "title": "Camera × AI = Perfect Memory",
-    "subtitle": "Five core features connecting the full loop of capture → understand → retrieve",
+    "eyebrow": "Core Features",
+    "title":   "Camera × AI = Perfect Memory",
+    "subtitle": "Five features connecting capture → understand → retrieve",
     "items": [
-      {
-        "title": "Snap to Remember",
-        "description": "Photo triggers OCR + multimodal AI understanding. Auto-tags and archives business cards, whiteboards, documents, menus, receipts.",
-        "advantage": "Highlight: On-device OCR for privacy"
-      },
-      {
-        "title": "Natural Language Search",
-        "description": "Ask \"What was on that whiteboard last week?\" AI answers in seconds with source images. No more scrolling through photos.",
-        "advantage": "Highlight: RAG vector search for precision"
-      },
-      {
-        "title": "Multilingual Understanding",
-        "description": "English menus, Japanese signs, Chinese contracts — auto-translated and stored. Works everywhere you travel.",
-        "advantage": "Highlight: Supports 10+ languages"
-      }
+      { "icon": "gn01.png", "title": "Snap to Remember",       "desc": "Photo triggers OCR + multimodal AI. Auto-tags business cards, whiteboards, documents, menus, receipts." },
+      { "icon": "gn02.png", "title": "Natural Language Search", "desc": "Ask 'What was on that whiteboard last week?' AI answers in seconds with source images." },
+      { "icon": "gn03.png", "title": "Multilingual",           "desc": "English menus, Japanese signs, Chinese contracts — auto-translated and stored." },
+      { "icon": "gn01.png", "title": "Knowledge Graph",        "desc": "AI discovers hidden connections between your records, weaving scattered info into a network." },
+      { "icon": "gn02.png", "title": "Export & Share",         "desc": "Export to Notion, PDF, or share with teammates. Knowledge travels with you." },
+      { "icon": "gn03.png", "title": "Privacy First",          "desc": "On-device OCR, optional local storage. Your data stays yours.", "dark": true }
     ]
   },
-  "advantages": {
-    "title": "Why MemoLens",
-    "description": "Privacy, speed, and intelligence — all three",
-    "items": [
-      {
-        "label": "Local-First Processing",
-        "description": "OCR happens on your device. Sensitive content never leaves your phone."
-      },
-      {
-        "label": "3-Second Archiving",
-        "description": "From photo to AI analysis in under 3 seconds. 10x more efficient."
-      },
-      {
-        "label": "Knowledge Graph",
-        "description": "AI discovers hidden connections between your records, weaving scattered info into a knowledge network."
-      },
-      {
-        "label": "Cross-Platform Export",
-        "description": "One-click export to Notion, PDF, or share with teammates."
-      }
+  "how": {
+    "eyebrow": "How It Works",
+    "title":   "3 Steps, Remember Forever",
+    "subtitle": "From photo to retrieval in as fast as 3 seconds",
+    "steps": [
+      { "num": "01", "title": "Snap & Scan",    "desc": "Open camera, point at anything. AI recognizes text in real-time, archives in 3 seconds." },
+      { "num": "02", "title": "AI Archives",    "desc": "Auto-detects content type, generates summary, applies tags, extracts structured info." },
+      { "num": "03", "title": "Retrieve Anytime", "desc": "Ask in natural language, get AI answers with source images. Never forget again." }
     ]
   },
   "pricing": {
-    "title": "Simple, Transparent Pricing",
-    "description": "Start free, upgrade anytime",
+    "eyebrow": "Pricing",
+    "title":   "Simple, Transparent Pricing",
+    "subtitle": "Start free, upgrade anytime",
     "popular": "Most Popular",
-    "planFree": "Free",
-    "planPro": "Pro",
-    "priceFree": "$0",
-    "pricePro": "$4.99",
-    "perMonth": "/mo",
-    "proFirst": "First month $0.99",
-    "freeFeatures": ["200 scans/month", "Basic AI Q&A", "English & Chinese OCR", "30-day history"],
-    "proFeatures": ["Unlimited scans", "Advanced AI (GPT-4o)", "10+ languages", "Unlimited history", "Knowledge graph", "Export to Notion/PDF"],
-    "ctaFree": "Download Free",
-    "ctaPro": "Upgrade Now →"
+    "free": {
+      "name":     "Free",
+      "price":    "$0",
+      "period":   "/mo",
+      "features": ["200 scans/month", "Basic AI Q&A", "EN & ZH OCR", "30-day history"],
+      "excluded": ["Advanced AI", "Unlimited storage"],
+      "cta":      "Download Free"
+    },
+    "pro": {
+      "name":     "Pro",
+      "price":    "$4.99",
+      "period":   "/mo",
+      "hint":     "First month $0.99",
+      "features": ["Unlimited scans", "Advanced AI (GPT-4o)", "10+ languages", "Unlimited history", "Knowledge graph", "Export to Notion/PDF"],
+      "cta":      "Upgrade Now →"
+    },
+    "enterprise": "Enterprise (team knowledge base) $9.99/user/mo · Contact us"
+  },
+  "testimonials": {
+    "eyebrow": "Reviews",
+    "title":   "Loved by users",
+    "items": [
+      { "stars": 5, "text": "\"Scanned 30 business cards on a business trip. Asked AI 'what's that Alibaba Cloud guy's name?' — instant answer. Used to take 1 hour, now zero.\"", "name": "Wei Zhang", "role": "Consultant · Beijing", "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" },
+      { "stars": 5, "text": "\"Scanned menus in Japan, translated instantly. Back home I can still ask AI 'how much was that signature dish?' Incredible!\"", "name": "Xiaomeng Li", "role": "Traveler", "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" },
+      { "stars": 5, "text": "\"Must-have for grad students! Saved all paper screenshots, ask AI for citations while writing. 2x productivity boost.\"", "name": "Bowen Chen", "role": "PhD Student · Shanghai", "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" }
+    ]
+  },
+  "cta": {
+    "title":    "Start Your Second Brain",
+    "subtitle": "Free download · 200 scans/month · No credit card",
+    "ios":      "App Store",
+    "android":  "Google Play"
   },
   "footer": {
     "tagline": "AI-powered camera memory tool.\nNever forget what matters.",
     "product": "Product",
-    "legal": "Legal",
-    "allRightsReserved": "All rights reserved",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service"
+    "legal":   "Legal",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms":   "Terms of Service",
+    "blog":    "Blog",
+    "rights":  "All rights reserved"
   },
   "seo": {
-    "title": "MemoLens - Snap It, Never Forget It",
-    "ogTitle": "MemoLens - Your AI-Powered Second Brain",
-    "description": "Scan business cards, whiteboards, and documents with your camera. AI archives everything. Find anything with natural language.",
-    "keywords": "MemoLens, AI notes, camera archive, second brain, OCR, smart memory"
+    "title":       "MemoLens - Snap It, Never Forget It",
+    "description": "Scan business cards, whiteboards, documents with your camera. AI archives everything. Find anything with natural language.",
+    "keywords":    "MemoLens, AI notes, camera archive, second brain, OCR"
   },
-  "privacy": {
-    "title": "Privacy Policy",
-    "updated": "Last updated: March 4, 2026",
-    "highlight": "We take your privacy seriously. MemoLens uses a local-first design where OCR runs on your device to maximize privacy."
-  },
-  "terms": {
-    "title": "Terms of Service"
-  },
-  "common": {
-    "heroAlt": "MemoLens - AI Camera Memory Tool",
-    "whyAlt": "Why MemoLens"
-  }
+  "privacy": { "title": "Privacy Policy",    "updated": "Last updated: March 4, 2026", "highlight": "We take your privacy seriously. MemoLens uses local-first design." },
+  "terms":   { "title": "Terms of Service" }
 }
