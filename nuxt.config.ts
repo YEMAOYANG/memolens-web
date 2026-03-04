@@ -1,45 +1,87 @@
 export default defineNuxtConfig({
-  devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss',
+    '@nuxt/eslint',
     '@nuxt/image',
+    '@nuxt/ui',
     '@vueuse/nuxt',
     'nuxt-og-image',
-    '@nuxtjs/robots',
+    'nuxt-svgo',
     '@nuxtjs/sitemap',
+    '@nuxtjs/i18n'
   ],
-  app: {
-    head: {
-      title: 'MemoLens — AI 驱动的第二大脑',
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: '用手机摄像头扫描名片、白板、文件，AI 自动归档，随时自然语言找回。' },
-        { property: 'og:title', content: 'MemoLens — 拍一下，记住一切' },
-        { property: 'og:description', content: 'AI 驱动的相机记忆工具' },
-        { property: 'og:image', content: '/og-image.png' },
-        { name: 'theme-color', content: '#5B5FEF' },
-      ],
-      link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css' },
-      ],
-    },
+
+  i18n: {
+    locales: [
+      { code: 'zh-CN', name: '中文', file: 'zh-CN.json' },
+      { code: 'en', name: 'English', file: 'en.json' }
+    ],
+    defaultLocale: 'zh-CN',
+    strategy: 'no_prefix'
   },
-  runtimeConfig: {
-    public: {
-      apiBase: process.env.API_BASE_URL || 'https://api.memolens.app',
-      appStoreUrl: process.env.APP_STORE_URL || '#',
-      googlePlayUrl: process.env.GOOGLE_PLAY_URL || '#',
-    },
-  },
-  nitro: {
-    prerender: {
-      routes: ['/', '/download', '/privacy', '/terms'],
-    },
-  },
+
+  devtools: { enabled: true },
+
+  css: ['~/assets/css/main.css'],
+
   site: {
     url: 'https://memolens.app',
-    name: 'MemoLens',
+    name: 'MemoLens'
   },
+
+  future: { compatibilityVersion: 4 },
+  compatibilityDate: '2024-11-01',
+
+  nitro: {
+    prerender: {
+      routes: ['/'],
+      crawlLinks: false
+    }
+  },
+
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+            @use "@/assets/css/variables.scss" as *;
+            @use "@/assets/css/mixins.scss" as *;
+          `
+        }
+      }
+    }
+  },
+
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        quotes: 'single',
+        semi: false,
+        commaDangle: 'never',
+        braceStyle: '1tbs',
+        arrowParens: true
+      }
+    }
+  },
+
+  image: {
+    format: ['webp', 'jpg', 'png'],
+    quality: 80,
+    screens: { xs: 320, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536 },
+    presets: {
+      hero: { modifiers: { format: 'webp', quality: 80, fit: 'cover' } },
+      icon: { modifiers: { format: 'webp', width: 80, height: 80, quality: 85 } }
+    },
+    dir: 'assets/images',
+    provider: 'ipx'
+  },
+
+  svgo: {
+    dts: true,
+    autoImportPath: '~/assets/icons/',
+    componentPrefix: 'icon',
+    svgoConfig: {
+      plugins: [{ name: 'preset-default', params: { overrides: { removeViewBox: false } } }]
+    }
+  }
 })

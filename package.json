@@ -4,29 +4,36 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
+    "build:prerender": "nuxt build --prerender",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "@nuxtjs/tailwindcss": "^6.12.0",
-    "@tailwindcss/typography": "^0.5.13",
-    "nuxt": "^4.0.0",
-    "vue": "latest",
-    "vue-router": "latest"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@nuxt/image": "^1.7.0",
-    "@vueuse/nuxt": "^10.11.0",
-    "nuxt-og-image": "^3.0.0",
-    "@nuxtjs/robots": "^4.1.4",
-    "@nuxtjs/sitemap": "^5.3.0"
+    "@iconify-json/lucide": "1.2.95",
+    "@iconify-json/simple-icons": "1.2.72",
+    "@nuxt/image": "^2.0.0",
+    "@nuxt/ui": "4.5.1",
+    "@nuxtjs/i18n": "^10.2.3",
+    "@standard-schema/spec": "1.1.0",
+    "@vueuse/nuxt": "^14.1.0",
+    "nuxt": "4.3.1",
+    "nuxt-og-image": "5.1.13"
   },
-  "packageManager": "pnpm@10.30.3",
-  "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=9.0.0"
-  }
+  "devDependencies": {
+    "@nuxt/eslint": "^1.9.0",
+    "@nuxtjs/sitemap": "^7.4.7",
+    "eslint": "^10.0.2",
+    "nuxt-svgo": "^4.2.6",
+    "sass": "^1.93.2",
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.1"
+  },
+  "resolutions": {
+    "unimport": "4.1.1"
+  },
+  "packageManager": "pnpm@10.30.3"
 }

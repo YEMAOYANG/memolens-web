@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "advantages": "Why Us",
+    "price": "Pricing",
+    "download": "Download"
+  },
+  "hero": {
+    "badge": "New · AI-Powered Memory Tool",
+    "title": "Snap It,\nNever Forget It",
+    "description": "Scan business cards, whiteboards, menus, contracts with your camera. AI archives and organizes everything. Find anything with natural language."
+  },
+  "stats": {
+    "quota": "200",
+    "quotaLabel": "Free scans/month",
+    "accuracy": "96%+",
+    "accuracyLabel": "AI accuracy",
+    "speed": "<3s",
+    "speedLabel": "Archive speed",
+    "lang": "10+",
+    "langLabel": "Languages"
+  },
+  "download": {
+    "ios": "App Store",
+    "android": "Google Play",
+    "guarantee": "Free to download · 200 scans/month · No credit card",
+    "title": "Start Your Second Brain",
+    "description": "Free to download · 200 scans/month · No credit card required"
+  },
+  "features": {
+    "title": "Camera × AI = Perfect Memory",
+    "subtitle": "Five core features connecting the full loop of capture → understand → retrieve",
+    "items": [
+      {
+        "title": "Snap to Remember",
+        "description": "Photo triggers OCR + multimodal AI understanding. Auto-tags and archives business cards, whiteboards, documents, menus, receipts.",
+        "advantage": "Highlight: On-device OCR for privacy"
+      },
+      {
+        "title": "Natural Language Search",
+        "description": "Ask \"What was on that whiteboard last week?\" AI answers in seconds with source images. No more scrolling through photos.",
+        "advantage": "Highlight: RAG vector search for precision"
+      },
+      {
+        "title": "Multilingual Understanding",
+        "description": "English menus, Japanese signs, Chinese contracts — auto-translated and stored. Works everywhere you travel.",
+        "advantage": "Highlight: Supports 10+ languages"
+      }
+    ]
+  },
+  "advantages": {
+    "title": "Why MemoLens",
+    "description": "Privacy, speed, and intelligence — all three",
+    "items": [
+      {
+        "label": "Local-First Processing",
+        "description": "OCR happens on your device. Sensitive content never leaves your phone."
+      },
+      {
+        "label": "3-Second Archiving",
+        "description": "From photo to AI analysis in under 3 seconds. 10x more efficient."
+      },
+      {
+        "label": "Knowledge Graph",
+        "description": "AI discovers hidden connections between your records, weaving scattered info into a knowledge network."
+      },
+      {
+        "label": "Cross-Platform Export",
+        "description": "One-click export to Notion, PDF, or share with teammates."
+      }
+    ]
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "description": "Start free, upgrade anytime",
+    "popular": "Most Popular",
+    "planFree": "Free",
+    "planPro": "Pro",
+    "priceFree": "$0",
+    "pricePro": "$4.99",
+    "perMonth": "/mo",
+    "proFirst": "First month $0.99",
+    "freeFeatures": ["200 scans/month", "Basic AI Q&A", "English & Chinese OCR", "30-day history"],
+    "proFeatures": ["Unlimited scans", "Advanced AI (GPT-4o)", "10+ languages", "Unlimited history", "Knowledge graph", "Export to Notion/PDF"],
+    "ctaFree": "Download Free",
+    "ctaPro": "Upgrade Now →"
+  },
+  "footer": {
+    "tagline": "AI-powered camera memory tool.\nNever forget what matters.",
+    "product": "Product",
+    "legal": "Legal",
+    "allRightsReserved": "All rights reserved",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "seo": {
+    "title": "MemoLens - Snap It, Never Forget It",
+    "ogTitle": "MemoLens - Your AI-Powered Second Brain",
+    "description": "Scan business cards, whiteboards, and documents with your camera. AI archives everything. Find anything with natural language.",
+    "keywords": "MemoLens, AI notes, camera archive, second brain, OCR, smart memory"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "Last updated: March 4, 2026",
+    "highlight": "We take your privacy seriously. MemoLens uses a local-first design where OCR runs on your device to maximize privacy."
+  },
+  "terms": {
+    "title": "Terms of Service"
+  },
+  "common": {
+    "heroAlt": "MemoLens - AI Camera Memory Tool",
+    "whyAlt": "Why MemoLens"
+  }
+}

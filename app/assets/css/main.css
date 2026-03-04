@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@source "../../../content/**/*";
+
+@theme static {
+  --font-sans: -apple-system, 'SF Pro Display', 'Inter', 'PingFang SC', sans-serif;
+
+  --color-primary-50: #EEF2FF;
+  --color-primary-100: #E0E7FF;
+  --color-primary-400: #818CF8;
+  --color-primary-500: #5B5FEF;
+  --color-primary-600: #4F46E5;
+  --color-primary-700: #4338CA;
+}
+
+/* 品牌主色 */
+:root {
+  --ui-primary: #5B5FEF;
+  --brand-primary: #5B5FEF;
+  --brand-accent: #8B5CF6;
+}
+
+.dark {
+  --ui-bg: #0C0C18;
+  --ui-bg-muted: #12121F;
+  --ui-bg-elevated: #12121F;
+  --ui-bg-accented: #1E1E30;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 品牌渐变按钮 */
+.btn-brand {
+  background: linear-gradient(135deg, #5B5FEF 0%, #8B5CF6 100%) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(91, 95, 239, 0.35) !important;
+  transition: all 0.2s ease;
+}
+.btn-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(91, 95, 239, 0.45) !important;
+}
+.btn-brand * { color: white !important; }
+
+/* 下载按钮 */
+.btn-download {
+  background: linear-gradient(135deg, #5B5FEF 0%, #8B5CF6 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(91, 95, 239, 0.35);
+  color: white !important;
+  transition: all 0.2s;
+}
+.btn-download:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(91, 95, 239, 0.45) !important;
+}
+.btn-download * { color: white !important; }
+
+/* 深色下载按钮（Hero 区域） */
+.btn-dark {
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: white !important;
+  transition: all 0.2s;
+}
+.btn-dark:hover {
+  background: rgba(255,255,255,0.14) !important;
+}
+.btn-dark * { color: white !important; }
+
+/* 文字渐变 */
+.text-brand-gradient {
+  background: linear-gradient(135deg, #5B5FEF, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
