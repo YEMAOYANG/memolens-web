@@ -6,22 +6,22 @@ const links = computed(() => [
     label: t('footer.product'),
     children: [
       { label: t('nav.features'), to: '#features' },
-      { label: t('nav.price'),    to: '#price' },
-      { label: t('nav.download'), to: '#download' }
+      { label: t('nav.price'), to: '#price' },
+      { label: t('nav.download'), to: '/download' }
     ]
   },
   {
     label: t('footer.legal'),
     children: [
       { label: t('footer.privacy'), to: '/privacy' },
-      { label: t('footer.terms'),   to: '/terms' }
+      { label: t('footer.terms'), to: '/terms' }
     ]
   },
   {
     label: t('footer.contact'),
     children: [
       { label: 'hello@memolens.app', to: 'mailto:hello@memolens.app' },
-      { label: t('footer.blog'),     to: '#' }
+      { label: t('footer.blog'), to: '#' }
     ]
   }
 ])
@@ -34,18 +34,47 @@ const links = computed(() => [
         <!-- 品牌 -->
         <div class="footer-brand">
           <AppLogo class="mb-3" />
-          <p class="footer-tagline">{{ t('footer.tagline') }}</p>
+          <p class="footer-tagline">
+            {{ t('footer.tagline') }}
+          </p>
           <div class="footer-socials">
-            <UButton icon="i-simple-icons-weibo"  variant="ghost" color="neutral" size="xs" to="#" class="social-btn" />
-            <UButton icon="i-simple-icons-x"      variant="ghost" color="neutral" size="xs" to="#" class="social-btn" />
-            <UButton icon="i-simple-icons-github" variant="ghost" color="neutral" size="xs" to="#" class="social-btn" />
+            <UButton
+              icon="i-simple-icons-sinaweibo"
+              variant="ghost"
+              color="neutral"
+              size="xs"
+              to="#"
+              class="social-btn"
+            />
+            <UButton
+              icon="i-simple-icons-x"
+              variant="ghost"
+              color="neutral"
+              size="xs"
+              to="#"
+              class="social-btn"
+            />
+            <UButton
+              icon="i-simple-icons-github"
+              variant="ghost"
+              color="neutral"
+              size="xs"
+              to="#"
+              class="social-btn"
+            />
           </div>
         </div>
 
         <!-- 链接组 -->
         <div class="footer-links">
-          <div v-for="group in links" :key="group.label" class="footer-link-group">
-            <p class="footer-link-title">{{ group.label }}</p>
+          <div
+            v-for="group in links"
+            :key="group.label"
+            class="footer-link-group"
+          >
+            <p class="footer-link-title">
+              {{ group.label }}
+            </p>
             <NuxtLink
               v-for="link in group.children"
               :key="link.label"
@@ -101,6 +130,10 @@ const links = computed(() => [
 :deep(.social-btn) {
   width: 32px;
   height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: $radius-sm;
   background: rgba($white, 0.05);
   color: rgba($white, 0.35);

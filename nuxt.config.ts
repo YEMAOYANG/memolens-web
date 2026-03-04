@@ -10,15 +10,6 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n'
   ],
 
-  i18n: {
-    locales: [
-      { code: 'zh-CN', name: '中文', file: 'zh-CN.json' },
-      { code: 'en', name: 'English', file: 'en.json' }
-    ],
-    defaultLocale: 'zh-CN',
-    strategy: 'no_prefix'
-  },
-
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
@@ -62,6 +53,15 @@ export default defineNuxtConfig({
         arrowParens: true
       }
     }
+  },
+
+  i18n: {
+    locales: [
+      { code: 'zh-CN', name: '中文', file: 'zh-CN.json' },
+      { code: 'en', name: 'English', file: 'en.json' }
+    ],
+    defaultLocale: 'zh-CN',
+    strategy: 'no_prefix'
   },
 
   image: {

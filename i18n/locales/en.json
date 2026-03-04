@@ -5,13 +5,14 @@
     "howItWorks": "How It Works",
     "price":      "Pricing",
     "download":   "Download",
-    "getApp":     "Get App Free"
+    "getApp":     "Get App Free",
+    "backHome":   "← Back to Home"
   },
   "hero": {
     "badge":       "New · AI-Powered Memory Tool",
     "title":       "Snap It, Never Forget It",
-    "titleAccent": "Snap It, ",
-    "titleNormal": "Never Forget It",
+    "titleNormal": "Snap It, ",
+    "titleAccent": "Never Forget It",
     "description": "Scan business cards, whiteboards, menus, contracts with your camera. AI archives everything. Find anything with natural language.",
     "ctaIos":      "App Store",
     "ctaAndroid":  "Google Play",
@@ -29,12 +30,12 @@
     "title":   "Camera × AI = Perfect Memory",
     "subtitle": "Five features connecting capture → understand → retrieve",
     "items": [
-      { "icon": "gn01.png", "title": "Snap to Remember",       "desc": "Photo triggers OCR + multimodal AI. Auto-tags business cards, whiteboards, documents, menus, receipts." },
-      { "icon": "gn02.png", "title": "Natural Language Search", "desc": "Ask 'What was on that whiteboard last week?' AI answers in seconds with source images." },
-      { "icon": "gn03.png", "title": "Multilingual",           "desc": "English menus, Japanese signs, Chinese contracts — auto-translated and stored." },
-      { "icon": "gn01.png", "title": "Knowledge Graph",        "desc": "AI discovers hidden connections between your records, weaving scattered info into a network." },
-      { "icon": "gn02.png", "title": "Export & Share",         "desc": "Export to Notion, PDF, or share with teammates. Knowledge travels with you." },
-      { "icon": "gn03.png", "title": "Privacy First",          "desc": "On-device OCR, optional local storage. Your data stays yours.", "dark": true }
+      { "title": "Snap to Remember",       "desc": "Photo triggers OCR + multimodal AI. Auto-tags business cards, whiteboards, documents, menus, receipts." },
+      { "title": "Natural Language Search", "desc": "Ask 'What was on that whiteboard last week?' AI answers in seconds with source images." },
+      { "title": "Multilingual",           "desc": "English menus, Japanese signs, Chinese contracts — auto-translated and stored." },
+      { "title": "Knowledge Graph",        "desc": "AI discovers hidden connections between your records, weaving scattered info into a network." },
+      { "title": "Export & Share",         "desc": "Export to Notion, PDF, or share with teammates. Knowledge travels with you." },
+      { "title": "Privacy First",          "desc": "On-device OCR, optional local storage. Your data stays yours." }
     ]
   },
   "how": {
@@ -42,9 +43,9 @@
     "title":   "3 Steps, Remember Forever",
     "subtitle": "From photo to retrieval in as fast as 3 seconds",
     "steps": [
-      { "num": "01", "title": "Snap & Scan",    "desc": "Open camera, point at anything. AI recognizes text in real-time, archives in 3 seconds." },
-      { "num": "02", "title": "AI Archives",    "desc": "Auto-detects content type, generates summary, applies tags, extracts structured info." },
-      { "num": "03", "title": "Retrieve Anytime", "desc": "Ask in natural language, get AI answers with source images. Never forget again." }
+      { "num": "1", "title": "Snap & Scan",    "desc": "Open camera, point at anything. AI recognizes text in real-time, archives in 3 seconds." },
+      { "num": "2", "title": "AI Archives",    "desc": "Auto-detects content type, generates summary, applies tags, extracts structured info." },
+      { "num": "3", "title": "Retrieve Anytime", "desc": "Ask in natural language, get AI answers with source images. Never forget again." }
     ]
   },
   "pricing": {
@@ -99,6 +100,24 @@
     "title":       "MemoLens - Snap It, Never Forget It",
     "description": "Scan business cards, whiteboards, documents with your camera. AI archives everything. Find anything with natural language.",
     "keywords":    "MemoLens, AI notes, camera archive, second brain, OCR"
+  },
+  "download": {
+    "seoTitle": "Download MemoLens",
+    "seoDesc": "Free download MemoLens for iOS and Android",
+    "title": "Download MemoLens",
+    "subtitle": "Start free, available on iOS and Android",
+    "ios": { "name": "iOS", "sub": "iPhone / iPad", "btn": "App Store Download", "version": "v1.0.0 · Requires iOS 16+" },
+    "android": { "name": "Android", "sub": "Phone / Tablet", "btn": "Google Play Download", "version": "v1.0.0 · Requires Android 10+" },
+    "windows": { "name": "Windows", "sub": "Coming Soon", "btn": "Stay Tuned", "version": "Expected 2026 Q3" },
+    "qr": { "ios": "Scan to download iOS", "android": "Scan to download Android" },
+    "req": {
+      "title": "System Requirements",
+      "subtitle": "Make sure your device meets these requirements",
+      "iosLabel": "iOS Minimum", "iosVal": "iOS 16.0+",
+      "androidLabel": "Android Minimum", "androidVal": "Android 10+",
+      "storageLabel": "Storage", "storageVal": "~80MB",
+      "permLabel": "Required Permissions", "permVal": "Camera, Photos"
+    }
   },
   "privacy": { "title": "Privacy Policy",    "updated": "Last updated: March 4, 2026", "highlight": "We take your privacy seriously. MemoLens uses local-first design." },
   "terms":   { "title": "Terms of Service" }

@@ -1,91 +1,177 @@
 <script setup lang="ts">
-const { t, tm } = useI18n()
+const { t, tm, rt } = useI18n()
 
-const stats         = computed(() => tm('stats') as Array<{ num: string; label: string }>)
-const featureItems  = computed(() => tm('features.items') as Array<{ icon: string; title: string; desc: string; dark?: boolean }>)
-const howSteps      = computed(() => tm('how.steps') as Array<{ num: string; title: string; desc: string }>)
-const testimonials  = computed(() => tm('testimonials.items') as Array<{ stars: number; text: string; name: string; role: string; avatar: string }>)
+type MsgNode = Parameters<typeof rt>[0]
+
+function isMsgNode(v: unknown): v is MsgNode {
+  return typeof v === 'object' && v !== null && 'type' in v && 'body' in v
+}
+
+function resolveList<T>(key: string): T[] {
+  return (tm(key) as unknown[]).map((item) => {
+    if (typeof item === 'string') {
+      return item
+    }
+    if (isMsgNode(item)) {
+      return rt(item)
+    }
+    if (typeof item === 'object' && item !== null) {
+      const resolved: Record<string, unknown> = {}
+      for (const [k, v] of Object.entries(item)) {
+        resolved[k] = isMsgNode(v) ? rt(v) : v
+      }
+      return resolved
+    }
+    return item
+  }) as T[]
+}
+
+const stats = computed(() => resolveList<{ num: string, label: string }>('stats'))
+
+const featureMeta = [
+  { icon: 'i-lucide-camera' },
+  { icon: 'i-lucide-search' },
+  { icon: 'i-lucide-globe' },
+  { icon: 'i-lucide-network' },
+  { icon: 'i-lucide-share-2' },
+  { icon: 'i-lucide-shield-check', dark: true }
+]
+const featureItems = computed(() =>
+  resolveList<{ title: string, desc: string }>('features.items').map((item, i) => ({
+    ...item,
+    ...featureMeta[i]
+  }))
+)
+const stepImages = ['step-scan.jpg', 'step-ai.jpg', 'step-search.jpg']
+const howSteps = computed(() =>
+  resolveList<{ num: string, title: string, desc: string }>('how.steps').map((step, i) => ({
+    ...step,
+    image: stepImages[i] || stepImages[0]
+  }))
+)
+const testimonials = computed(() => resolveList<{ stars: number, text: string, name: string, role: string, avatar: string }>('testimonials.items'))
+const pricingFreeFeatures = computed(() => resolveList<string>('pricing.free.features'))
+const pricingFreeExcluded = computed(() => resolveList<string>('pricing.free.excluded'))
+const pricingProFeatures = computed(() => resolveList<string>('pricing.pro.features'))
 
 useSeoMeta({
-  title:       () => t('seo.title'),
+  title: () => t('seo.title'),
   description: () => t('seo.description'),
-  keywords:    () => t('seo.keywords')
+  keywords: () => t('seo.keywords')
 })
 </script>
 
 <template>
   <div>
-
     <!-- ========== HERO ========== -->
-    <section id="home" class="hero-section">
-      <div class="hero-glow" />
+    <section
+      id="home"
+      class="hero-section"
+    >
+      <div class="hero-glow"></div>
       <UContainer>
-        <div class="hero-inner">
-          <!-- 左侧文案 -->
-          <div class="hero-content">
-            <div class="hero-badge">
-              <span class="badge-dot" />
-              <span>{{ t('hero.badge') }}</span>
-            </div>
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <UIcon
+              name="i-lucide-sparkles"
+              class="eyebrow-icon"
+            />
+            <span>{{ t('hero.badge') }}</span>
+          </div>
 
-            <h1 class="hero-title">
-              <span class="hero-title-accent">{{ t('hero.titleAccent') }}</span>{{ t('hero.titleNormal') }}
-            </h1>
+          <h1 class="hero-title">
+            {{ t('hero.titleNormal') }}<span class="hero-title-accent">{{ t('hero.titleAccent') }}</span>
+          </h1>
 
-            <p class="hero-desc">{{ t('hero.description') }}</p>
+          <p class="hero-desc">
+            {{ t('hero.description') }}
+          </p>
 
-            <div class="hero-btns">
-              <UButton to="#download" size="xl" class="btn-primary-brand">
-                <template #leading>
-                  <NuxtImg src="apple.png" alt="iOS" class="btn-store-icon" />
-                </template>
-                {{ t('hero.ctaIos') }}
-              </UButton>
-              <UButton to="#download" size="xl" class="btn-dark-ghost">
-                <template #leading>
-                  <NuxtImg src="android.png" alt="Android" class="btn-store-icon" />
-                </template>
-                {{ t('hero.ctaAndroid') }}
-              </UButton>
-              <UButton size="xl" class="btn-dark-ghost">
-                <template #leading>
-                  <UIcon name="i-lucide-play" class="btn-play-icon" />
-                </template>
-                {{ t('hero.ctaDemo') }}
-              </UButton>
-            </div>
+          <div class="hero-btns">
+            <UButton
+              to="/download"
+              size="xl"
+              class="btn-primary-brand"
+            >
+              <template #leading>
+                <UIcon
+                  name="i-simple-icons-apple"
+                  class="btn-icon"
+                />
+              </template>
+              {{ t('hero.ctaIos') }}
+            </UButton>
+            <UButton
+              to="/download"
+              size="xl"
+              class="btn-dark-ghost"
+            >
+              <template #leading>
+                <UIcon
+                  name="i-simple-icons-googleplay"
+                  class="btn-icon"
+                />
+              </template>
+              {{ t('hero.ctaAndroid') }}
+            </UButton>
+            <UButton
+              size="xl"
+              class="btn-dark-ghost"
+            >
+              <template #leading>
+                <UIcon
+                  name="i-lucide-play"
+                  class="btn-play-icon"
+                />
+              </template>
+              {{ t('hero.ctaDemo') }}
+            </UButton>
+          </div>
 
-            <p class="hero-guarantee">{{ t('hero.guarantee') }}</p>
-
-            <!-- 统计数字 -->
-            <div class="hero-stats">
-              <div v-for="s in stats" :key="s.num" class="stat-item">
-                <div class="stat-num">{{ s.num }}</div>
-                <div class="stat-label">{{ s.label }}</div>
+          <div class="hero-stats">
+            <div
+              v-for="s in stats"
+              :key="s.num"
+              class="stat-item"
+            >
+              <div class="stat-num">
+                {{ s.num }}
+              </div>
+              <div class="stat-label">
+                {{ s.label }}
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- 右侧手机 -->
-          <div class="hero-phones">
-            <div class="phone-wrap side-phone">
+        <!-- 手机展示 -->
+        <div class="hero-phones">
+          <div class="phone-mockup side-phone">
+            <div class="di-small"></div>
+            <div class="phone-screen">
               <NuxtImg
-                src="banner.png"
-                alt="MemoLens App - 搜索页"
+                src="hero-phone-left.jpg"
+                alt="MemoLens App"
                 class="phone-screen-img"
               />
             </div>
-            <div class="phone-wrap main-phone">
+          </div>
+          <div class="phone-mockup main-phone">
+            <div class="di-small"></div>
+            <div class="phone-screen">
               <NuxtImg
-                src="banner.png"
-                alt="MemoLens App - 首页"
+                src="hero-phone-main.jpg"
+                alt="MemoLens App"
                 class="phone-screen-img"
               />
             </div>
-            <div class="phone-wrap side-phone">
+          </div>
+          <div class="phone-mockup side-phone">
+            <div class="di-small"></div>
+            <div class="phone-screen">
               <NuxtImg
-                src="banner.png"
-                alt="MemoLens App - 相册"
+                src="hero-phone-right.jpg"
+                alt="MemoLens App"
                 class="phone-screen-img"
               />
             </div>
@@ -95,13 +181,26 @@ useSeoMeta({
     </section>
 
     <!-- ========== FEATURES ========== -->
-    <section id="features" class="features-section">
+    <section
+      id="features"
+      class="features-section"
+    >
       <UContainer>
-        <div class="section-header">
-          <span class="eyebrow">{{ t('features.eyebrow') }}</span>
-          <h2 class="section-title dark-title">{{ t('features.title') }}</h2>
-          <p class="section-subtitle dark-subtitle">{{ t('features.subtitle') }}</p>
+        <div class="section-eyebrow">
+          <span class="tag">
+            <UIcon
+              name="i-lucide-zap"
+              class="tag-icon"
+            />
+            {{ t('features.eyebrow') }}
+          </span>
         </div>
+        <h2 class="section-title">
+          {{ t('features.title') }}
+        </h2>
+        <p class="section-desc">
+          {{ t('features.subtitle') }}
+        </p>
 
         <div class="features-grid">
           <div
@@ -109,13 +208,16 @@ useSeoMeta({
             :key="i"
             :class="['feature-card', item.dark ? 'feature-card--dark' : '']"
           >
-            <div class="feature-icon-wrap">
-              <NuxtImg :src="item.icon" :alt="item.title" class="feature-icon-img" />
+            <div :class="['feature-icon-wrap', item.dark ? 'feature-icon-wrap--dark' : '']">
+              <UIcon
+                :name="item.icon"
+                class="feature-icon-svg"
+              />
             </div>
-            <h3 :class="['feature-card-title', item.dark ? 'feature-card-title--dark' : '']">
+            <h3 :class="['feature-title', item.dark ? 'feature-title--dark' : '']">
               {{ item.title }}
             </h3>
-            <p :class="['feature-card-desc', item.dark ? 'feature-card-desc--dark' : '']">
+            <p :class="['feature-desc', item.dark ? 'feature-desc--dark' : '']">
               {{ item.desc }}
             </p>
           </div>
@@ -124,99 +226,200 @@ useSeoMeta({
     </section>
 
     <!-- ========== HOW IT WORKS ========== -->
-    <section id="how" class="how-section">
+    <section
+      id="how"
+      class="how-section"
+    >
       <UContainer>
-        <div class="section-header">
-          <span class="eyebrow">{{ t('how.eyebrow') }}</span>
-          <h2 class="section-title">{{ t('how.title') }}</h2>
-          <p class="section-subtitle">{{ t('how.subtitle') }}</p>
+        <div class="section-eyebrow">
+          <span class="tag">
+            <UIcon
+              name="i-lucide-list-ordered"
+              class="tag-icon"
+            />
+            {{ t('how.eyebrow') }}
+          </span>
         </div>
+        <h2 class="section-title">
+          {{ t('how.title') }}
+        </h2>
+        <p class="section-desc">
+          {{ t('how.subtitle') }}
+        </p>
 
         <div class="how-steps">
-          <div v-for="(step, i) in howSteps" :key="step.num" class="how-step">
+          <div
+            v-for="step in howSteps"
+            :key="step.num"
+            class="how-step"
+          >
             <div class="step-num-wrap">
               <span class="step-num">{{ step.num }}</span>
             </div>
-            <NuxtImg src="banner.png" :alt="step.title" class="step-img" />
-            <h3 class="step-title">{{ step.title }}</h3>
-            <p class="step-desc">{{ step.desc }}</p>
+            <NuxtImg
+              :src="step.image"
+              :alt="step.title"
+              class="step-img"
+            />
+            <h3 class="step-title">
+              {{ step.title }}
+            </h3>
+            <p class="step-desc">
+              {{ step.desc }}
+            </p>
           </div>
         </div>
       </UContainer>
     </section>
 
     <!-- ========== PRICING ========== -->
-    <section id="price" class="pricing-section">
+    <section
+      id="price"
+      class="pricing-section"
+    >
       <UContainer>
-        <div class="section-header">
-          <span class="eyebrow">{{ t('pricing.eyebrow') }}</span>
-          <h2 class="section-title dark-title">{{ t('pricing.title') }}</h2>
-          <p class="section-subtitle dark-subtitle">{{ t('pricing.subtitle') }}</p>
+        <div class="section-eyebrow">
+          <span class="tag">
+            <UIcon
+              name="i-lucide-tag"
+              class="tag-icon"
+            />
+            {{ t('pricing.eyebrow') }}
+          </span>
         </div>
+        <h2 class="section-title">
+          {{ t('pricing.title') }}
+        </h2>
+        <p class="section-desc">
+          {{ t('pricing.subtitle') }}
+        </p>
 
         <div class="pricing-grid">
           <!-- 免费版 -->
           <div class="price-card">
-            <p class="price-name">{{ t('pricing.free.name') }}</p>
+            <p class="price-name">
+              {{ t('pricing.free.name') }}
+            </p>
             <div class="price-amount">
               {{ t('pricing.free.price') }}<span class="price-period">{{ t('pricing.free.period') }}</span>
             </div>
             <ul class="price-features">
-              <li v-for="f in (t('pricing.free.features') as unknown as string[])" :key="f" class="price-feature">
-                <UIcon name="i-lucide-check" class="feature-check" />{{ f }}
+              <li
+                v-for="f in pricingFreeFeatures"
+                :key="f"
+                class="price-feature"
+              >
+                <UIcon
+                  name="i-lucide-check"
+                  class="feature-check"
+                />{{ f }}
               </li>
-              <li v-for="f in (t('pricing.free.excluded') as unknown as string[])" :key="f" class="price-feature price-feature--excluded">
-                <UIcon name="i-lucide-x" class="feature-x" />{{ f }}
+              <li
+                v-for="f in pricingFreeExcluded"
+                :key="f"
+                class="price-feature price-feature--excluded"
+              >
+                <UIcon
+                  name="i-lucide-circle-x"
+                  class="feature-x"
+                />{{ f }}
               </li>
             </ul>
-            <UButton to="#download" variant="outline" color="primary" block size="lg" class="price-cta-outline">
+            <UButton
+              to="/download"
+              variant="outline"
+              color="primary"
+              block
+              size="lg"
+              class="price-cta-outline"
+            >
               {{ t('pricing.free.cta') }}
             </UButton>
           </div>
 
           <!-- Pro 版 -->
           <div class="price-card price-card--pro">
-            <div class="price-glow" />
+            <div class="price-glow"></div>
             <span class="price-popular-badge">{{ t('pricing.popular') }}</span>
-            <p class="price-name price-name--pro">{{ t('pricing.pro.name') }}</p>
+            <p class="price-name price-name--pro">
+              {{ t('pricing.pro.name') }}
+            </p>
             <div class="price-amount price-amount--pro">
               {{ t('pricing.pro.price') }}<span class="price-period price-period--pro">{{ t('pricing.pro.period') }}</span>
             </div>
-            <p class="price-hint">{{ t('pricing.pro.hint') }}</p>
+            <p class="price-hint">
+              {{ t('pricing.pro.hint') }}
+            </p>
             <ul class="price-features">
-              <li v-for="f in (t('pricing.pro.features') as unknown as string[])" :key="f" class="price-feature price-feature--pro">
-                <UIcon name="i-lucide-check" class="feature-check feature-check--pro" />{{ f }}
+              <li
+                v-for="f in pricingProFeatures"
+                :key="f"
+                class="price-feature price-feature--pro"
+              >
+                <UIcon
+                  name="i-lucide-check"
+                  class="feature-check feature-check--pro"
+                />{{ f }}
               </li>
             </ul>
-            <UButton to="#download" block size="lg" class="btn-primary-brand price-cta">
+            <UButton
+              to="/download"
+              block
+              size="lg"
+              class="btn-primary-brand price-cta"
+            >
               {{ t('pricing.pro.cta') }}
             </UButton>
           </div>
         </div>
 
-        <p class="pricing-enterprise">{{ t('pricing.enterprise') }}</p>
+        <p class="pricing-enterprise">
+          {{ t('pricing.enterprise') }}
+        </p>
       </UContainer>
     </section>
 
     <!-- ========== TESTIMONIALS ========== -->
     <section class="testimonials-section">
       <UContainer>
-        <div class="section-header">
-          <span class="eyebrow">{{ t('testimonials.eyebrow') }}</span>
-          <h2 class="section-title">{{ t('testimonials.title') }}</h2>
+        <div class="section-eyebrow">
+          <span class="tag">
+            <UIcon
+              name="i-lucide-heart"
+              class="tag-icon"
+            />
+            {{ t('testimonials.eyebrow') }}
+          </span>
         </div>
+        <h2 class="section-title">
+          {{ t('testimonials.title') }}
+        </h2>
 
         <div class="testi-grid">
-          <div v-for="(t_item, i) in testimonials" :key="i" class="testi-card">
+          <div
+            v-for="(t_item, i) in testimonials"
+            :key="i"
+            class="testi-card"
+          >
             <div class="testi-stars">
-              <UIcon v-for="s in t_item.stars" :key="s" name="i-lucide-star" class="star-icon" />
+              {{ '★'.repeat(t_item.stars) }}
             </div>
-            <p class="testi-text">{{ t_item.text }}</p>
+            <p class="testi-text">
+              {{ t_item.text }}
+            </p>
             <div class="testi-user">
-              <NuxtImg :src="t_item.avatar" :alt="t_item.name" class="testi-avatar" />
+              <img
+                :src="t_item.avatar"
+                :alt="t_item.name"
+                class="testi-avatar"
+              />
               <div>
-                <div class="testi-name">{{ t_item.name }}</div>
-                <div class="testi-role">{{ t_item.role }}</div>
+                <div class="testi-name">
+                  {{ t_item.name }}
+                </div>
+                <div class="testi-role">
+                  {{ t_item.role }}
+                </div>
               </div>
             </div>
           </div>
@@ -225,30 +428,48 @@ useSeoMeta({
     </section>
 
     <!-- ========== CTA DOWNLOAD ========== -->
-    <section id="download" class="cta-section">
-      <div class="cta-glow" />
+    <section
+      id="download"
+      class="cta-section"
+    >
+      <div class="cta-glow"></div>
       <UContainer>
-        <h2 class="cta-title">{{ t('cta.title') }}</h2>
-        <p class="cta-subtitle">{{ t('cta.subtitle') }}</p>
+        <h2 class="cta-title">
+          {{ t('cta.title') }}
+        </h2>
+        <p class="cta-subtitle">
+          {{ t('cta.subtitle') }}
+        </p>
         <div class="cta-btns">
-          <div class="store-btn">
-            <UIcon name="i-simple-icons-apple" class="store-icon" />
+          <NuxtLink
+            to="/download"
+            class="store-btn"
+          >
+            <UIcon
+              name="i-simple-icons-apple"
+              class="store-icon"
+            />
             <div class="store-text">
               <span class="store-sub">Download on the</span>
               <span class="store-name">{{ t('cta.ios') }}</span>
             </div>
-          </div>
-          <div class="store-btn">
-            <NuxtImg src="google-play.png" alt="Google Play" class="store-icon-img" />
+          </NuxtLink>
+          <NuxtLink
+            to="/download"
+            class="store-btn"
+          >
+            <UIcon
+              name="i-simple-icons-googleplay"
+              class="store-icon"
+            />
             <div class="store-text">
               <span class="store-sub">Get it on</span>
               <span class="store-name">{{ t('cta.android') }}</span>
             </div>
-          </div>
+          </NuxtLink>
         </div>
       </UContainer>
     </section>
-
   </div>
 </template>
 
@@ -258,19 +479,16 @@ useSeoMeta({
 // ===========================
 .hero-section {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 6rem 0 0;
+  padding: 90px 0 0;
   background: linear-gradient(160deg, #0C0C18 0%, #12121F 50%, #1A0F2E 100%);
   overflow: hidden;
 }
 
 .hero-glow {
   position: absolute;
-  top: 50%;
+  top: -200px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: 900px;
   height: 900px;
   border-radius: 50%;
@@ -278,61 +496,40 @@ useSeoMeta({
   pointer-events: none;
 }
 
-.hero-inner {
-  @include flex(row, center, space-between);
-  gap: $spacing-3xl;
-
-  @media (max-width: $breakpoint-lg) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
 .hero-content {
-  flex: 1;
-  max-width: 580px;
-
-  @media (max-width: $breakpoint-lg) {
-    max-width: 100%;
-  }
+  text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
-.hero-badge {
-  @include flex(row, center, flex-start);
+.hero-eyebrow {
   display: inline-flex;
-  gap: $spacing-sm;
-  padding: 6px 16px;
+  align-items: center;
+  gap: 8px;
   background: rgba($brand-primary, 0.15);
   border: 1px solid rgba($brand-primary, 0.3);
-  border-radius: $radius-full;
-  margin-bottom: $spacing-xl;
-  font-size: $text-xs;
-  font-weight: $font-semibold;
+  padding: 6px 16px;
+  border-radius: 20px;
   color: #8B9FFF;
-
-  @media (max-width: $breakpoint-lg) {
-    justify-content: center;
-  }
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: $radius-full;
-  background: $brand-primary;
-  flex-shrink: 0;
+.eyebrow-icon {
+  font-size: 12px;
 }
 
 .hero-title {
-  font-size: $text-hero;
-  font-weight: $font-black;
+  font-size: 64px;
+  font-weight: 800;
   color: $white;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  margin-bottom: $spacing-lg;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
 
-  @media (max-width: $breakpoint-xl) { font-size: $text-5xl; }
-  @media (max-width: $breakpoint-md) { font-size: $text-4xl; }
+  @media (max-width: $breakpoint-xl) { font-size: 52px; }
+  @media (max-width: $breakpoint-md) { font-size: 38px; }
 }
 
 .hero-title-accent {
@@ -343,33 +540,30 @@ useSeoMeta({
 }
 
 .hero-desc {
-  font-size: $text-lg;
+  font-size: 19px;
   color: rgba($white, 0.55);
+  max-width: 580px;
+  margin: 0 auto 36px;
   line-height: 1.7;
-  margin-bottom: $spacing-2xl;
 
-  @media (max-width: $breakpoint-lg) {
-    font-size: $text-base;
-    max-width: 520px;
-    margin-left: auto;
-    margin-right: auto;
+  @media (max-width: $breakpoint-md) {
+    font-size: 16px;
   }
 }
 
 .hero-btns {
-  @include flex(row, center, flex-start);
+  display: flex;
+  gap: 14px;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: $spacing-md;
-  margin-bottom: $spacing-md;
-
-  @media (max-width: $breakpoint-lg) { justify-content: center; }
+  margin-bottom: 56px;
 }
 
 .btn-primary-brand {
   background: $brand-gradient !important;
   border: none !important;
-  border-radius: $radius-xl !important;
-  font-weight: $font-semibold !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
   color: $white !important;
   box-shadow: $shadow-brand !important;
   @include transition(all);
@@ -385,8 +579,8 @@ useSeoMeta({
 .btn-dark-ghost {
   background: rgba($white, 0.08) !important;
   border: 1px solid rgba($white, 0.12) !important;
-  border-radius: $radius-xl !important;
-  font-weight: $font-semibold !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
   color: $white !important;
   @include transition(all);
 
@@ -394,31 +588,27 @@ useSeoMeta({
   :deep(*) { color: $white !important; }
 }
 
-.btn-store-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
+.btn-icon {
+  font-size: 18px;
 }
 
 .btn-play-icon {
   font-size: 12px;
 }
 
-.hero-guarantee {
-  font-size: $text-xs;
-  color: rgba($white, 0.3);
-  margin-bottom: $spacing-2xl;
-}
-
 .hero-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: $spacing-lg;
-  padding: $spacing-xl 0;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  padding: 24px 0;
   border-top: 1px solid rgba($white, 0.07);
+  border-bottom: 1px solid rgba($white, 0.07);
+  margin: 0 40px 60px;
 
   @media (max-width: $breakpoint-sm) {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 0 0 40px;
+    flex-wrap: wrap;
   }
 }
 
@@ -427,51 +617,58 @@ useSeoMeta({
 }
 
 .stat-num {
-  font-size: $text-2xl;
-  font-weight: $font-black;
+  font-size: 28px;
+  font-weight: 800;
   color: $white;
 }
 
 .stat-label {
-  font-size: $text-xs;
+  font-size: 13px;
   color: rgba($white, 0.4);
   margin-top: 2px;
-  line-height: 1.4;
 }
 
 .hero-phones {
-  @include flex(row, flex-end, center);
-  gap: $spacing-lg;
-  padding-bottom: 0;
-  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: flex-end;
+  padding: 0 40px;
 
-  @media (max-width: $breakpoint-lg) {
-    justify-content: center;
+  @media (max-width: $breakpoint-md) {
+    padding: 0 20px;
   }
 }
 
-.phone-wrap {
+.phone-mockup {
+  border-radius: 40px;
   background: #1C1C1E;
   padding: 3px;
   box-shadow: $shadow-phone;
-  overflow: hidden;
+  position: relative;
   flex-shrink: 0;
 }
 
 .main-phone {
   width: 240px;
   height: 520px;
-  border-radius: 40px;
 }
 
 .side-phone {
   width: 200px;
   height: 435px;
-  border-radius: 35px;
   opacity: 0.7;
+  transform: scale(0.95);
   margin-bottom: 40px;
 
   @media (max-width: $breakpoint-md) { display: none; }
+}
+
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 37px;
+  overflow: hidden;
 }
 
 .phone-screen-img {
@@ -480,73 +677,90 @@ useSeoMeta({
   object-fit: cover;
 }
 
+.di-small {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 22px;
+  background: #000;
+  border-radius: 14px;
+  z-index: 10;
+}
+
 // ===========================
 // 通用 section 样式
 // ===========================
-.section-header {
+.section-eyebrow {
   text-align: center;
-  margin-bottom: $spacing-4xl;
+  margin-bottom: 16px;
 }
 
-.eyebrow {
+.tag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 14px;
-  border-radius: $radius-full;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
   background: rgba($brand-primary, 0.1);
   color: $brand-primary;
-  font-size: $text-xs;
-  font-weight: $font-bold;
-  margin-bottom: $spacing-md;
+}
+
+.tag-icon {
+  font-size: 11px;
 }
 
 .section-title {
-  font-size: $text-4xl;
-  font-weight: $font-black;
-  color: $text-primary;
-  letter-spacing: -0.02em;
+  font-size: 42px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.8px;
+  margin-bottom: 16px;
   line-height: 1.2;
-  margin-bottom: $spacing-md;
+  color: $text-primary;
 
-  @media (max-width: $breakpoint-md) { font-size: $text-3xl; }
+  @media (max-width: $breakpoint-md) { font-size: 32px; }
 }
 
-.dark-title { color: $white; }
-
-.section-subtitle {
-  font-size: $text-lg;
+.section-desc {
+  font-size: 17px;
   color: $text-secondary;
+  text-align: center;
   max-width: 520px;
-  margin: 0 auto;
+  margin: 0 auto 60px;
   line-height: 1.7;
 }
-
-.dark-subtitle { color: rgba($white, 0.5); }
 
 // ===========================
 // FEATURES
 // ===========================
 .features-section {
   padding: $section-y 0;
-  background: $dark-bg;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-lg;
+  gap: 24px;
 
   @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: $breakpoint-sm) { grid-template-columns: 1fr; }
 }
 
 .feature-card {
-  background: $dark-surface;
-  border-radius: $radius-3xl;
-  padding: $spacing-2xl;
-  border: 1px solid $dark-border;
-  @include hover-lift;
+  background: $light-bg;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid $light-border;
+  @include transition(all);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba($brand-primary, 0.08);
+  }
 
   &--dark {
     background: linear-gradient(135deg, #0C0C18, #1A0F2E);
@@ -557,34 +771,36 @@ useSeoMeta({
 .feature-icon-wrap {
   width: 52px;
   height: 52px;
-  border-radius: $radius-xl;
+  border-radius: 16px;
   background: $brand-gradient;
   @include flex-center;
-  margin-bottom: $spacing-lg;
+  margin-bottom: 20px;
+
+  &--dark {
+    background: rgba($brand-primary, 0.3);
+  }
 }
 
-.feature-icon-img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
+.feature-icon-svg {
+  font-size: 22px;
+  color: $white;
 }
 
-.feature-card-title {
-  font-size: $text-xl;
-  font-weight: $font-bold;
-  color: $dark-text;
-  margin-bottom: $spacing-sm;
+.feature-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: $text-primary;
+  margin-bottom: 10px;
 
   &--dark { color: $white; }
 }
 
-.feature-card-desc {
-  font-size: $text-sm;
-  color: rgba($white, 0.45);
+.feature-desc {
+  font-size: 15px;
+  color: $text-secondary;
   line-height: 1.65;
 
-  &--dark { color: rgba($white, 0.45); }
+  &--dark { color: rgba($white, 0.5); }
 }
 
 // ===========================
@@ -592,13 +808,13 @@ useSeoMeta({
 // ===========================
 .how-section {
   padding: $section-y 0;
-  background: linear-gradient(135deg, $light-bg, #EEF2FF);
+  background: linear-gradient(135deg, #F8F8FF, #EEF2FF);
 }
 
 .how-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-2xl;
+  gap: 32px;
 
   @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
 }
@@ -610,15 +826,15 @@ useSeoMeta({
 .step-num-wrap {
   width: 48px;
   height: 48px;
-  border-radius: $radius-full;
+  border-radius: 50%;
   background: $brand-gradient;
   @include flex-center;
-  margin: 0 auto $spacing-lg;
+  margin: 0 auto 20px;
 }
 
 .step-num {
-  font-size: $text-lg;
-  font-weight: $font-black;
+  font-size: 20px;
+  font-weight: 800;
   color: $white;
 }
 
@@ -626,22 +842,22 @@ useSeoMeta({
   width: 100%;
   height: 180px;
   object-fit: cover;
-  border-radius: $radius-xl;
-  margin-bottom: $spacing-lg;
-  box-shadow: $shadow-lg;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .step-title {
-  font-size: $text-xl;
-  font-weight: $font-bold;
+  font-size: 18px;
+  font-weight: 700;
   color: $text-primary;
-  margin-bottom: $spacing-sm;
+  margin-bottom: 8px;
 }
 
 .step-desc {
-  font-size: $text-sm;
+  font-size: 15px;
   color: $text-secondary;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 // ===========================
@@ -649,13 +865,12 @@ useSeoMeta({
 // ===========================
 .pricing-section {
   padding: $section-y 0;
-  background: $dark-bg;
 }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-lg;
+  gap: 24px;
   max-width: 760px;
   margin: 0 auto;
 
@@ -663,10 +878,9 @@ useSeoMeta({
 }
 
 .price-card {
-  border-radius: $radius-3xl;
-  padding: $spacing-3xl;
+  border-radius: 24px;
+  padding: 36px;
   border: 1px solid $light-border;
-  background: $light-surface;
 
   &--pro {
     background: linear-gradient(135deg, #0C0C18, #1A0F2E);
@@ -682,7 +896,7 @@ useSeoMeta({
   right: -80px;
   width: 200px;
   height: 200px;
-  border-radius: $radius-full;
+  border-radius: 50%;
   background: radial-gradient(circle, rgba($brand-primary, 0.3), transparent);
 }
 
@@ -690,16 +904,16 @@ useSeoMeta({
   display: inline-block;
   background: $brand-gradient;
   color: $white;
-  font-size: $text-xs;
-  font-weight: $font-bold;
+  font-size: 12px;
+  font-weight: 700;
   padding: 3px 12px;
-  border-radius: $radius-full;
-  margin-bottom: $spacing-md;
+  border-radius: 20px;
+  margin-bottom: 16px;
 }
 
 .price-name {
-  font-size: $text-xl;
-  font-weight: $font-bold;
+  font-size: 20px;
+  font-weight: 700;
   color: $text-primary;
   margin-bottom: 4px;
 
@@ -708,44 +922,45 @@ useSeoMeta({
 
 .price-amount {
   font-size: 42px;
-  font-weight: $font-black;
+  font-weight: 800;
   color: $text-primary;
-  letter-spacing: -0.03em;
-  margin: $spacing-sm 0;
+  letter-spacing: -1px;
+  margin: 12px 0;
 
   &--pro { color: $white; }
 }
 
 .price-period {
-  font-size: $text-base;
-  font-weight: $font-normal;
+  font-size: 15px;
+  font-weight: 400;
   color: $text-secondary;
 
-  &--pro { color: rgba($white, 0.45); }
+  &--pro { color: rgba($white, 0.5); }
 }
 
 .price-hint {
-  font-size: $text-sm;
+  font-size: 13px;
   color: rgba($white, 0.35);
-  margin-bottom: $spacing-md;
+  margin-bottom: 16px;
 }
 
 .price-features {
   list-style: none;
   padding: 0;
-  margin: $spacing-lg 0 $spacing-xl;
+  margin: 20px 0 28px;
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
+  gap: 10px;
 }
 
 .price-feature {
-  @include flex(row, center, flex-start);
-  gap: $spacing-sm;
-  font-size: $text-sm;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
   color: $text-secondary;
 
-  &--pro   { color: rgba($white, 0.8); }
+  &--pro   { color: rgba($white, 0.85); }
   &--excluded { color: $text-tertiary; }
 }
 
@@ -766,19 +981,19 @@ useSeoMeta({
 }
 
 .price-cta {
-  border-radius: $radius-xl !important;
+  border-radius: 12px !important;
   :deep(*) { color: $white !important; }
 }
 
 .price-cta-outline {
-  border-radius: $radius-xl !important;
+  border-radius: 12px !important;
 }
 
 .pricing-enterprise {
   text-align: center;
-  font-size: $text-sm;
-  color: $dark-text-sub;
-  margin-top: $spacing-xl;
+  font-size: 14px;
+  color: $text-secondary;
+  margin-top: 24px;
 }
 
 // ===========================
@@ -786,65 +1001,61 @@ useSeoMeta({
 // ===========================
 .testimonials-section {
   padding: $section-y 0;
-  background: $light-bg;
+  background: #F5F5FA;
 }
 
 .testi-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-lg;
+  gap: 20px;
+  margin-top: 60px;
 
   @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: $breakpoint-sm) { grid-template-columns: 1fr; }
 }
 
 .testi-card {
-  background: $light-surface;
-  border-radius: $radius-2xl;
-  padding: $spacing-xl;
-  box-shadow: $shadow-md;
+  background: $white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 .testi-stars {
-  @include flex(row, center, flex-start);
-  gap: 2px;
-  margin-bottom: $spacing-sm;
-}
-
-.star-icon {
-  color: $warning;
-  width: 14px;
-  height: 14px;
+  color: #F59E0B;
+  font-size: 14px;
+  margin-bottom: 12px;
 }
 
 .testi-text {
-  font-size: $text-sm;
-  color: $text-primary;
+  font-size: 15px;
   line-height: 1.7;
-  margin-bottom: $spacing-md;
+  color: $text-primary;
+  margin-bottom: 16px;
 }
 
 .testi-user {
-  @include flex(row, center, flex-start);
-  gap: $spacing-sm;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .testi-avatar {
   width: 38px;
   height: 38px;
-  border-radius: $radius-full;
+  border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
 }
 
 .testi-name {
-  font-size: $text-sm;
-  font-weight: $font-semibold;
+  font-size: 14px;
+  font-weight: 600;
   color: $text-primary;
 }
 
 .testi-role {
-  font-size: $text-xs;
+  font-size: 12px;
   color: $text-secondary;
 }
 
@@ -863,47 +1074,51 @@ useSeoMeta({
   @include absolute-center;
   width: 600px;
   height: 600px;
-  border-radius: $radius-full;
+  border-radius: 50%;
   background: radial-gradient(circle, rgba($brand-primary, 0.2), transparent);
   pointer-events: none;
 }
 
 .cta-title {
-  font-size: $text-5xl;
-  font-weight: $font-black;
+  font-size: 48px;
+  font-weight: 800;
   color: $white;
-  letter-spacing: -0.03em;
-  margin-bottom: $spacing-md;
+  margin-bottom: 16px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  letter-spacing: -1px;
 
-  @media (max-width: $breakpoint-md) { font-size: $text-4xl; }
+  @media (max-width: $breakpoint-md) { font-size: 36px; }
 }
 
 .cta-subtitle {
-  font-size: $text-lg;
-  color: rgba($white, 0.45);
-  margin-bottom: $spacing-3xl;
+  font-size: 18px;
+  color: rgba($white, 0.5);
+  margin-bottom: 36px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .cta-btns {
-  @include flex(row, center, center);
-  flex-wrap: wrap;
-  gap: $spacing-md;
+  display: flex;
+  gap: 14px;
+  justify-content: center;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  flex-wrap: wrap;
 }
 
 .store-btn {
-  @include flex(row, center, flex-start);
-  gap: $spacing-sm;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   background: rgba($white, 0.08);
   border: 1px solid rgba($white, 0.15);
-  border-radius: $radius-xl;
-  padding: $spacing-sm $spacing-lg;
+  border-radius: 14px;
+  padding: 12px 22px;
+  color: $white;
   cursor: pointer;
+  text-decoration: none;
   @include transition(all);
 
   &:hover { background: rgba($white, 0.14); }
@@ -915,25 +1130,21 @@ useSeoMeta({
   flex-shrink: 0;
 }
 
-.store-icon-img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
 .store-text {
-  @include flex(column, flex-start, flex-start);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 .store-sub {
   font-size: 11px;
-  color: rgba($white, 0.5);
+  opacity: 0.6;
+  color: $white;
 }
 
 .store-name {
-  font-size: $text-lg;
-  font-weight: $font-bold;
+  font-size: 16px;
+  font-weight: 700;
   color: $white;
 }
 </style>
