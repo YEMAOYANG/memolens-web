@@ -1,14 +1,25 @@
 <script setup lang="ts">
 const { t } = useI18n()
 
-useSeoMeta({
-  title: () => t('seo.title'),
-  ogTitle: () => t('seo.ogTitle'),
-  description: () => t('seo.description'),
-  ogDescription: () => t('seo.description'),
-  keywords: () => t('seo.keywords'),
-  author: 'MemoLens'
-})
+const stats = computed(() => [
+  { num: t('stats.quota'), label: t('stats.quotaLabel') },
+  { num: t('stats.accuracy'), label: t('stats.accuracyLabel') },
+  { num: t('stats.speed'), label: t('stats.speedLabel') },
+  { num: t('stats.lang'), label: t('stats.langLabel') }
+])
+
+const featureItems = computed(() => [
+  { icon: 'gn01.png', title: t('features.items.0.title'), description: t('features.items.0.description'), advantage: t('features.items.0.advantage') },
+  { icon: 'gn02.png', title: t('features.items.1.title'), description: t('features.items.1.description'), advantage: t('features.items.1.advantage') },
+  { icon: 'gn03.png', title: t('features.items.2.title'), description: t('features.items.2.description'), advantage: t('features.items.2.advantage') }
+])
+
+const advantageItems = computed(() => [
+  { label: t('advantages.items.0.label'), description: t('advantages.items.0.description') },
+  { label: t('advantages.items.1.label'), description: t('advantages.items.1.description') },
+  { label: t('advantages.items.2.label'), description: t('advantages.items.2.description') },
+  { label: t('advantages.items.3.label'), description: t('advantages.items.3.description') }
+])
 </script>
 
 <template>
@@ -239,30 +250,6 @@ useSeoMeta({
     </section>
   </div>
 </template>
-
-<script setup lang="ts">
-const { t } = useI18n()
-
-const stats = computed(() => [
-  { num: t('stats.quota'), label: t('stats.quotaLabel') },
-  { num: t('stats.accuracy'), label: t('stats.accuracyLabel') },
-  { num: t('stats.speed'), label: t('stats.speedLabel') },
-  { num: t('stats.lang'), label: t('stats.langLabel') }
-])
-
-const featureItems = computed(() => [
-  { icon: 'gn01.png', title: t('features.items.0.title'), description: t('features.items.0.description'), advantage: t('features.items.0.advantage') },
-  { icon: 'gn02.png', title: t('features.items.1.title'), description: t('features.items.1.description'), advantage: t('features.items.1.advantage') },
-  { icon: 'gn03.png', title: t('features.items.2.title'), description: t('features.items.2.description'), advantage: t('features.items.2.advantage') }
-])
-
-const advantageItems = computed(() => [
-  { label: t('advantages.items.0.label'), description: t('advantages.items.0.description') },
-  { label: t('advantages.items.1.label'), description: t('advantages.items.1.description') },
-  { label: t('advantages.items.2.label'), description: t('advantages.items.2.description') },
-  { label: t('advantages.items.3.label'), description: t('advantages.items.3.description') }
-])
-</script>
 
 <style scoped>
 .phone-frame {
